@@ -20,11 +20,11 @@ export async function POST(request: NextRequest) {
     // Handle image input
     else if (file) {
       const arrayBuffer = await file.arrayBuffer();
-      const uint8Array = new Uint8Array(arrayBuffer);
+      const buffer = Buffer.from(arrayBuffer);
       
       // Use Tesseract.js for OCR
       const { data: { text: ocrText } } = await Tesseract.recognize(
-        uint8Array,
+        buffer,
         'chi_sim+eng', // Chinese Simplified + English
         {
           logger: info => console.log(info),
